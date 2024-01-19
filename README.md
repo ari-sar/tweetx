@@ -1,2 +1,2 @@
 # tweetx
-master is the main branch
+# master is the main branch
