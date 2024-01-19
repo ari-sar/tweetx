@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Please start the tweetx-backend first to have error free experience
 
-## After login logo navigates to login to have multiple user login easily for the testing of the project
+## After login, the logo navigates to the login page. It was done intentionally for the ease of testing the project
 
 ## Route guard was intentionally not added
 
