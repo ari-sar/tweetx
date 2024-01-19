@@ -1,0 +1,166 @@
+<header class="p-[30px] shadow-md flex justify-between items-center">
+  <p [routerLink]="'/'" class="text-tweetx font-roboto text-3xl cursor-pointer">
+    TweetX
+  </p>
+  <nav class="mr-[20%]">
+    <a routerLink="/feed" routerLinkActive="active-link">Feed</a>
+    <a routerLink="/users" class="mx-[40px]" routerLinkActive="active-link"
+      >Users</a
+    >
+    <a routerLink="/profile" routerLinkActive="active-link">Profile</a>
+  </nav>
+</header>
+
+<main class="flex justify-center">
+  <div class="w-[50%] h-[100vh]">
+    <div class="flex h-[170px] items-center mt-[55px]">
+      <div
+        class="w-[145px] h-[145px] rounded-full border-[1px] border-[#d0d0d0]"
+      ></div>
+      <div class="ml-[120px] grow h-full flex flex-col justify-end">
+        <p class="mb-[45px] text-2xl text-[#707070]">{{ user.name }}</p>
+        <div class="flex text-[#cdcdcd]">
+          <p>Posts: {{ myPosts?.length }}</p>
+          <p style="margin: 0 40px">Followers: {{ myFollowers?.length }}</p>
+          <p>Following: {{ myFollowing?.length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="mx-[10%] mt-[95px]">
+      <div
+        class="flex flex-col items-center justify-evenly h-[50px] text-[#b6b6b6]"
+      >
+        <div class="flex justify-evenly w-full border-[#b6b6b6] border-t-[1px]">
+          <div
+            class="relative transition-all top-[-1.5px] rounded-sm flex justify-center w-[20%]"
+            [ngClass]="
+              activeSegment === 'posts' ? 'border-[#707070] border-t-[2px]' : ''
+            "
+          ></div>
+          <div
+            class="relative transition-all top-[-1.5px] rounded-sm flex justify-center w-[20%]"
+            [ngClass]="
+              activeSegment === 'followers'
+                ? 'border-[#707070] border-t-[2px]'
+                : ''
+            "
+          ></div>
+          <div
+            class="relative transition-all top-[-1.5px] rounded-sm flex justify-center w-[20%]"
+            [ngClass]="
+              activeSegment === 'following'
+                ? 'border-[#707070] border-t-[2px]'
+                : ''
+            "
+          ></div>
+        </div>
+        <div class="flex justify-evenly w-full">
+          <div
+            (click)="changeSegment('posts')"
+            class="flex justify-center w-[20%] cursor-pointer"
+          >
+            <img class="w-5" src="../../assets/message.svg" />
+            <p
+              [ngClass]="activeSegment === 'posts' ? 'text-[#707070]' : ''"
+              class="ml-[12px] transition-colors"
+            >
+              Posts
+            </p>
+          </div>
+          <div
+            (click)="changeSegment('followers')"
+            class="flex justify-center w-[20% cursor-pointer"
+          >
+            <img class="w-5" src="../../assets/users.svg" />
+            <p
+              [ngClass]="activeSegment === 'followers' ? 'text-[#707070]' : ''"
+              class="ml-[12px] transition-colors"
+            >
+              Followers
+            </p>
+          </div>
+          <div
+            (click)="changeSegment('following')"
+            class="flex justify-center w-[20%] cursor-pointer"
+          >
+            <img class="w-5" src="../../assets/users.svg" />
+            <p
+              [ngClass]="activeSegment === 'following' ? 'text-[#707070]' : ''"
+              class="ml-[12px] transition-colors"
+            >
+              Following
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="h-full mt-[100px]">
+      <div *ngIf="activeSegment === 'posts'" id="posts" class="flex flex-col">
+        <div
+          *ngFor="let post of myPosts"
+          class="flex justify-between pt-[20px] rounded-2xl mb-[40px]"
+        >
+          <div class="pl-[40px]">
+            <div class="w-[75px] h-[75px] rounded-full border-[1px]"></div>
+          </div>
+          <div class="w-full flex flex-col mt-[35px] ml-[20px]">
+            <p class="ml-2 text-[#797979] text-[22px]">{{ post.userName }}</p>
+            <p class="w-full flex text-sm justify-end text-[#c6c6c6]">
+              {{ getTime(post.time) }} mins ago
+            </p>
+            <p class="w-[90%] text-sm mb-[40px] text-[#a8a8a8]">
+              {{ post.textField }}
+            </p>
+          </div>
+          <div class="w-[120px] flex items-center overflow-hidden">
+            <div
+              class="w-[60px] h-[60px] bg-tweetx rounded-full relative left-[50%]"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeSegment === 'followers'" id="followers">
+        <div
+          *ngFor="let followers of myFollowers"
+          class="flex justify-between items-center pb-[55px] px-[20px] mb-[40px]"
+        >
+          <div class="w-[75px] h-[75px] rounded-full border-[1px]"></div>
+          <div class="grow ml-[40px]">
+            <p class="text-[#707070] text-[22px]">{{ followers.name }}</p>
+            <p class="text-[#c8c8c8] text-sm">
+              following : {{ followers.following.length }}
+            </p>
+          </div>
+          <div class="w-[130px]">
+            <button
+              [disabled]="followers.hasFollowed"
+              [ngClass]="followers.hasFollowed ? 'bg-gray-400' : 'bg-tweetx'"
+              class="w-[130px] h-[50px] text-white rounded-lg shadow-lg"
+              (click)="follow(followers)"
+            >
+              Follow
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSegment === 'following'" id="following">
+        <div
+          *ngFor="let following of myFollowing"
+          class="flex justify-between items-center pb-[55px] px-[20px]"
+        >
+          <div class="w-[75px] h-[75px] rounded-full border-[1px]"></div>
+          <div class="grow ml-[40px]">
+            <p class="text-[#707070] text-[22px]">{{ following.name }}</p>
+            <p class="text-[#c8c8c8] text-sm">
+              following : {{ following.following.length }}
+            </p>
+          </div>
+          <div class="w-[130px]">
+            <p class="text-[#707070]">Following</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

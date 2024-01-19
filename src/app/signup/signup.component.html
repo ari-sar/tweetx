@@ -1,0 +1,161 @@
+<main class="w-100 h-full relative">
+  <img class="absolute bottom-0 right-0 w-[55%]" src="assets/onboarding.png" />
+  <div class="w-[40%] mt-[25px] ml-[100px] pb-[10%]">
+    <header>
+      <p
+        [routerLink]="'/'"
+        class="text-tweetx font-roboto text-3xl cursor-pointer"
+      >
+        TweetX
+      </p>
+    </header>
+    <div class="mt-[30px]">
+      <button
+        [routerLink]="'/login'"
+        class="border-[1px] border-[#b6b6b6] font-poppins rounded-2xl px-[30px] py-[15px] text-[#182631]"
+      >
+        Login
+      </button>
+    </div>
+    <p class="font-roboto text-3xl font-semibold mt-[60px] text-[#5d676e]">
+      Create Account
+    </p>
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="signUpForm"
+      class="w-[70%] flex flex-col mt-[60px]"
+    >
+      <div class="flex relative mb-[40px]">
+        <input
+          class="w-full h-[60px] bg-[#f9f9f9] pl-[30px] rounded-md"
+          type="text"
+          required
+          placeholder="Name"
+          formControlName="name"
+          (focusout)="focusOutFunction('name')"
+        />
+        <div
+          *ngIf="name?.invalid && (name?.dirty || name?.touched) && nameFilled"
+          class="absolute right-0 bottom-[-30%] transition-opacity"
+        >
+          <p class="text-xs text-red-600" *ngIf="name?.errors?.required">
+            Name is required
+          </p>
+        </div>
+      </div>
+
+      <div class="flex relative mb-[40px]">
+        <input
+          class="w-full h-[60px] bg-[#f9f9f9] pl-[30px] rounded-md"
+          type="email"
+          required
+          placeholder="Email"
+          formControlName="email"
+          (focusout)="focusOutFunction('email')"
+        />
+        <div
+          *ngIf="
+            email?.invalid && (email?.dirty || email?.touched) && emailFilled
+          "
+          class="absolute right-0 bottom-[-30%] transition-opacity"
+        >
+          <p class="text-xs text-red-600" *ngIf="email?.errors?.required">
+            Email is required
+          </p>
+          <p class="text-xs text-red-600" *ngIf="email?.errors?.email">
+            Invalid email format
+          </p>
+        </div>
+      </div>
+
+      <div class="flex relative mb-[40px]">
+        <div class="w-full relative flex">
+          <input
+            type="password"
+            class="w-full h-[60px] pl-[30px] rounded-md bg-[#f9f9f9] py-2 pr-10"
+            id="passwordField"
+            required
+            placeholder="Password"
+            formControlName="password"
+            (focusout)="focusOutFunction('password')"
+          />
+        </div>
+        <div
+          *ngIf="
+            password?.invalid &&
+            (password?.dirty || password?.touched) &&
+            passwordFilled
+          "
+          class="absolute right-0 bottom-[-30%] transition-opacity"
+        >
+          <p class="text-xs text-red-600" *ngIf="password?.errors?.required">
+            Password is required
+          </p>
+          <p class="text-xs text-red-600" *ngIf="password.errors?.minlength">
+            Password must be at least 6 characters
+          </p>
+        </div>
+      </div>
+
+      <div class="flex relative mb-[40px]">
+        <div class="w-full relative flex">
+          <input
+            type="password"
+            class="w-full h-[60px] pl-[30px] rounded-md bg-[#f9f9f9] py-2 pr-10"
+            id="confirmPasswordField"
+            #passwordInput
+            required
+            placeholder="Confirm Password"
+            formControlName="confirmPassword"
+            (focusout)="focusOutFunction('confirmPassword')"
+            (input)="passwordMatchValidator()"
+          />
+          <span
+            class="absolute h-[60px] right-[10px] flex items-center cursor-pointer"
+            id="togglePassword"
+            (click)="togglePassword()"
+          >
+            <img
+              *ngIf="showPassword"
+              class="w-[20px]"
+              src="../../assets/eye.svg"
+            />
+            <img
+              *ngIf="!showPassword"
+              class="w-[20px]"
+              src="../../assets/eye-closed.svg"
+            />
+          </span>
+        </div>
+        <div class="absolute right-0 bottom-[-30%] transition-opacity">
+          <p
+            class="text-xs text-red-600"
+            *ngIf="
+              confirmPassword.invalid &&
+              (confirmPassword.dirty || confirmPassword.touched) &&
+              confirmPasswordFilled &&
+              confirmPassword?.errors?.required
+            "
+          >
+            Confirm Password is required
+          </p>
+          <p class="text-xs text-red-600" *ngIf="isPasswordWrong">
+            Passwords do not match
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <p class="cursor-pointer"></p>
+        <button
+          class="w-[150px] transition-colors h-[60px] text-white rounded-lg shadow-lg"
+          type="submit"
+          [disabled]="signUpForm.invalid"
+          [ngClass]="signUpForm.invalid ? 'bg-gray-400' : 'bg-tweetx'"
+        >
+          Sign up
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

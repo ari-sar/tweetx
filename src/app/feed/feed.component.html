@@ -1,0 +1,55 @@
+<header class="p-[30px] shadow-md flex justify-between items-center">
+  <p [routerLink]="'/'" class="text-tweetx font-roboto text-3xl cursor-pointer">
+    TweetX
+  </p>
+  <nav class="mr-[20%]">
+    <a routerLink="/feed" routerLinkActive="active-link">Feed</a>
+    <a routerLink="/users" class="mx-[40px]" routerLinkActive="active-link"
+      >Users</a
+    >
+    <a routerLink="/profile" routerLinkActive="active-link">Profile</a>
+  </nav>
+</header>
+
+<section class="flex justify-center relative">
+  <div class="w-[45%] h-[100vh]">
+    <div class="mt-[50px]">
+      <div class="h-[70px]">
+        <textarea
+          [(ngModel)]="inputValue"
+          class="w-full h-full outline-none"
+          placeholder="share whats on your mind here..."
+        ></textarea>
+      </div>
+      <button
+        (click)="write()"
+        class="w-[150px] h-[60px] bg-tweetx text-white rounded-lg shadow-lg"
+      >
+        Write
+      </button>
+    </div>
+
+    <div class="flex flex-col pb-16">
+      <div
+        *ngFor="let post of posts"
+        class="flex justify-between pt-[20px] shadow-md rounded-2xl mt-[50px]"
+      >
+        <div class="pl-[40px]">
+          <div class="w-[75px] h-[75px] rounded-full border-[1px]"></div>
+        </div>
+        <div class="w-full flex flex-col mt-[35px] ml-[20px]">
+          <p class="w-full ml-2 text-[#797979] text-2xl">{{ post.userName }}</p>
+          <p class="flex text-sm justify-end text-[#c6c6c6]">{{getTime(post.time)}} mins ago</p>
+          <p class="w-[90%] text-sm mb-[40px] text-[#a8a8a8] mt-[10px]">
+            {{ post.textField }}
+          </p>
+        </div>
+        <div class="w-[120px] flex items-center overflow-hidden">
+          <div
+            class="w-[60px] h-[60px] bg-tweetx rounded-full relative left-[50%]"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<header class="p-[30px] shadow-md flex justify-between items-center">
+  <p [routerLink]="'/'" class="text-tweetx font-roboto text-3xl cursor-pointer">
+    TweetX
+  </p>
+  <nav class="mr-[20%]">
+    <a routerLink="/feed" routerLinkActive="active-link">Feed</a>
+    <a routerLink="/users" class="mx-[40px]" routerLinkActive="active-link"
+      >Users</a
+    >
+    <a routerLink="/profile" routerLinkActive="active-link">Profile</a>
+  </nav>
+</header>
+
+<section class="flex justify-center">
+  <div class="w-[45%] h-[100vh]">
+    <div
+      *ngFor="let user of users"
+      class="flex justify-between items-center my-[40px] border-b-2 pb-[55px] px-[20px]"
+    >
+      <div class="w-[75px] h-[75px] rounded-full border-[1px]"></div>
+      <div class="grow ml-[40px]">
+        <p class="text-[#707070] text-[22px]">{{ user.name }}</p>
+        <p class="text-[#c8c8c8] text-sm">
+          following : {{ user.following.length }}
+        </p>
+      </div>
+      <div class="w-[130px]">
+        <button
+          [disabled]="user.hasFollowed"
+          [ngClass]="user.hasFollowed ? 'bg-gray-400' : 'bg-tweetx'"
+          (click)="follow(user)"
+          class="w-[130px] h-[50px] text-white rounded-lg shadow-lg"
+        >
+          Follow
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

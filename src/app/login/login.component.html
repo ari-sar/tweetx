@@ -1,0 +1,112 @@
+<main class="w-100 h-[100vh] relative">
+  <img class="absolute bottom-0 right-0 w-[55%]" src="assets/onboarding.png" />
+  <div class="w-[40%] mt-[25px] ml-[100px]">
+    <header>
+      <p
+        [routerLink]="'/'"
+        class="text-tweetx font-roboto text-3xl cursor-pointer"
+      >
+        TweetX
+      </p>
+    </header>
+    <div class="mt-[30px]">
+      <button
+        [routerLink]="'/signup'"
+        class="border-[1px] border-[#b6b6b6] font-poppins rounded-2xl px-[30px] py-[15px] text-[#182631]"
+      >
+        Create Account
+      </button>
+    </div>
+    <p class="font-roboto text-3xl font-semibold mt-[60px] text-[#5d676e]">
+      Login
+    </p>
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="loginForm"
+      class="w-[70%] flex flex-col mt-[60px]"
+    >
+      <div class="flex relative mb-[40px]">
+        <input
+          class="w-full h-[60px] bg-[#f9f9f9] pl-[30px] rounded-md"
+          type="email"
+          required
+          placeholder="Email"
+          formControlName="email"
+          (focusout)="focusOutFunction('email')"
+        />
+        <div
+          *ngIf="
+            email?.invalid && (email?.dirty || email?.touched) && emailFilled
+          "
+          class="absolute right-0 bottom-[-30%] transition-opacity"
+        >
+          <p class="text-xs text-red-600" *ngIf="email?.errors?.required">
+            Email is required
+          </p>
+          <p class="text-xs text-red-600" *ngIf="email?.errors?.email">
+            Invalid email format
+          </p>
+        </div>
+      </div>
+
+      <div class="flex relative mb-[40px]">
+        <div class="w-full relative flex">
+          <input
+            type="password"
+            class="w-full h-[60px] pl-[30px] rounded-md bg-[#f9f9f9] py-2 pr-10"
+            id="passwordField"
+            #passwordInput
+            required
+            placeholder="Password"
+            formControlName="password"
+            (focusout)="focusOutFunction('password')"
+          />
+          <span
+            class="absolute h-[60px] right-[10px] flex items-center cursor-pointer"
+            id="togglePassword"
+            (click)="togglePassword()"
+          >
+            <img
+              *ngIf="showPassword"
+              class="w-[20px]"
+              src="../../assets/eye.svg"
+            />
+            <img
+              *ngIf="!showPassword"
+              class="w-[20px]"
+              src="../../assets/eye-closed.svg"
+            />
+          </span>
+        </div>
+        <div
+          *ngIf="
+            password?.invalid &&
+            (password?.dirty || password?.touched) &&
+            passwordFilled
+          "
+          class="absolute right-0 bottom-[-30%] transition-opacity"
+        >
+          <p class="text-xs text-red-600" *ngIf="password?.errors?.required">
+            Password is required
+          </p>
+          <p class="text-xs text-red-600" *ngIf="password.errors?.minlength">
+            Password must be at least 6 characters
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <p>Forgot Password ?</p>
+        <button
+          class="w-[150px] transition-colors h-[60px] text-white rounded-lg shadow-lg"
+          type="submit"
+          [disabled]="loginForm.invalid"
+          [ngClass]="loginForm.invalid ? 'bg-gray-400' : 'bg-tweetx'"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
