@@ -11,7 +11,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Please start the tweetx-backend first to have error free experience
 
-## After login, the logo navigates to the login page. It was done intentionally for the ease of testing the project
+## I have used Tailwind CSS for styling the components
+
+## After login, clicking the logo navigates to the login page. It was done intentionally for the ease of testing the project
 
 ## Route guard was intentionally not added
 
